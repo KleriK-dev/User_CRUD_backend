@@ -1,7 +1,7 @@
 package com.app.fullstackbackend.controller;
 
 import com.app.fullstackbackend.exception.UserNotFoundException;
-import com.app.fullstackbackend.model.User;
+import com.app.fullstackbackend.model.UserClass;
 import com.app.fullstackbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,28 +16,28 @@ public class UserController {
     private UserRepository userRepository;
 
     @PostMapping("/user")
-    public User newUser(@RequestBody User newUser){
-        return userRepository.save(newUser);
+    public UserClass newUser(@RequestBody UserClass newUserClass){
+        return userRepository.save(newUserClass);
     }
 
     @GetMapping("/getUsers")
-    public List<User> getAllUsers(){
+    public List<UserClass> getAllUsers(){
         return userRepository.findAll();
     }
 
     @GetMapping("/getUsers/{id}")
-    public User getUserById(@PathVariable Long id){
+    public UserClass getUserById(@PathVariable Long id){
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
     @PutMapping("/updateUsers/{id}")
-    public User updateUser(@RequestBody User newUser, @PathVariable Long id){
-        return userRepository.findById(id).map(user -> {
-           user.setUsername(newUser.getUsername());
-            user.setName(newUser.getName());
-            user.setEmail(newUser.getEmail());
-            return userRepository.save(user);
+    public UserClass updateUser(@RequestBody UserClass newUserClass, @PathVariable Long id){
+        return userRepository.findById(id).map(userClass -> {
+           userClass.setUsername(newUserClass.getUsername());
+            userClass.setName(newUserClass.getName());
+            userClass.setEmail(newUserClass.getEmail());
+            return userRepository.save(userClass);
         }).orElseThrow(() -> new UserNotFoundException(id));
     }
 
